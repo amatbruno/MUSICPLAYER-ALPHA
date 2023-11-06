@@ -33,7 +33,6 @@ body {
     padding: 10px;
     display: flex;
     margin-bottom: 20px;
-    border: solid 1px black;
 }
 
 .song-details {
@@ -48,7 +47,7 @@ body {
 }
 
 .song-info img {
-    width: 20%;
+    width: 16%;
     border-radius: 10px;
     display: block;
 }
@@ -66,7 +65,7 @@ body {
 .songs-list {
     width: 100%;
     overflow-y: scroll;
-    max-height: 300px;
+    max-height: 275px;
     border-radius: 8px;
 }
 
@@ -92,7 +91,7 @@ table tr th:hover {
 }
 
 table img {
-    width: 25%;
+    width: 70px;
 }
 
 /*CONTROL BUTTONS*/
@@ -104,9 +103,9 @@ table img {
 
 .control-buttons img {
     padding: 5%;
-    width: 25%;
+    width: 16%;
     cursor: pointer;
-    margin-right: 25px;
+    margin-right: 35px;
     margin-left: -40px;
 }
 
@@ -120,19 +119,38 @@ table img {
 
 
 /*RADIO STATION*/
-.radio-stations {
-    margin: auto;
-    height: auto;
-    border: solid 1px black;
+.rs-title {
     text-align: center;
-    padding: 4px;
-}
-
-.radio-stations h3 {
+    margin-top: 15px;
     font-size: 25px;
     font-weight: 600;
 }
 
+.radio-stations {
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    padding: 4px;
+    display: flex;
+}
+
+.radio-stations button {
+    margin-right: 40px;
+}
+
+.radio-button {
+    border: none;
+    background-color: rgba(212, 148, 255, 0.726);
+    border-radius: 7px;
+    width: 75px;
+    padding: 2px;
+    border: 1px solid transparent;
+    font-size: 19px;
+}
+
+.radio-button:hover {
+    border: solid 1px rgb(88, 88, 88);
+}
 
 /*PROGRESS BAR*/
 .progression-bar {

@@ -55,6 +55,12 @@ const songs = [{
     duration: '3:00'
 }];
 
+// const radioStations = [
+//     {
+//         name: "Los 40 FM",
+//         url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
+//     }
+// ];
 
 //QUERY SELECTORS
 const songTitle = document.querySelector(".song-name");
@@ -121,6 +127,23 @@ function playSelectedSong() {
             songArtist.textContent = selectedSong.artist;
         });
     });
+}
+
+
+function playRadio(stationIndex) {
+    const station = radioStations[stationIndex];
+
+    if (sound) {
+        sound.stop();
+    }
+
+    sound = new Howl({
+        src: [station.url],
+        format: ['mp3'],
+        autoplay: true
+    });
+
+    sound.play();
 }
 
 
