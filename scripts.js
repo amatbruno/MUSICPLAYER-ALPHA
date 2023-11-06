@@ -55,42 +55,54 @@ const songs = [{
     duration: '3:00'
 }];
 
+
+//QUERY SELECTORS
 const songTitle = document.querySelector(".song-name");
 const songArtist = document.querySelector(".author-name");
 const songImage = document.querySelector(".cover-song");
 const playButton = document.querySelector(".play-button");
 const pauseButton = document.querySelector(".pause-button");
+const returnButton = document.querySelector(".return-button");
+const nextButton = document.querySelector(".next-button");
 
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
 let sound;
 
+//FUNCTION TO DISPLAY SONGS DATASET
 function listSongs() {
     const table = document.querySelector("table");
 
-    songs.forEach(element => {
+    songs.forEach((element, index) => {
         const row = table.insertRow();
 
+        //NEW CELL FOR EACH COLUMN
         const cell = row.insertCell(0);
         const cell2 = row.insertCell(1);
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
 
+        //CREATE THE ELEMENTS
         const cov = document.createElement("img");
         const tit = document.createElement("td");
         const art = document.createElement("td");
         const dur = document.createElement("td");
 
+        //ASSIGN CELLS TO THE ARRAY ELEMENTS
         cov.src = element.img;
         tit.innerHTML = element.title;
         art.innerHTML = element.artist;
         dur.innerHTML = element.duration;
 
+        //APPEND CHILD IN ALL TABLE TD'S
         cell.appendChild(cov);
         cell2.appendChild(tit);
         cell3.appendChild(art);
         cell4.appendChild(dur);
+
+        //ASSIGN UNIQUE ID TO EACH ROW
+        row.dataset.songId = index;
     });
 }
 
@@ -99,22 +111,24 @@ function listSongs() {
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
 
-    tableRows.forEach((row, index) => {
+    tableRows.forEach((row) => {
         row.addEventListener("click", function () {
-            const selectedSong = songs[index];
-            const rowElements = row.getElementsByTagName("td");
+            const songId = row.dataset.songId;
+            const selectedSong = songs[songId];
 
-            // Actualiza los elementos de la fila seleccionada
             songImage.src = selectedSong.img;
-            songTitle.innerHTML = selectedSong.title;
-            songArtist.innerHTML = selectedSong.artist;
+            songTitle.textContent = selectedSong.title;
+            songArtist.textContent = selectedSong.artist;
         });
     });
 }
 
+//FUNCTIONS CALLING
 listSongs();
 playSelectedSong();
 
+
+//LISTENERS
 playButton.addEventListener("click", function () {
     if (!sound) {
         sound = new Howl({
