@@ -1,0 +1,143 @@
+/*IMPORTS*/
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Montserrat:wght@600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(212, 148, 255, 0.726);
+    font-family: 'Kanit', sans-serif;
+}
+
+/*MAIN CONTAINER BLOCK*/
+.container-fluid {
+    background-color: aliceblue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 85%;
+    border-radius: 10px;
+    box-shadow: 0 7px 18px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* SONGS INFO BLOCK*/
+.song-info {
+    width: 100%;
+    height: 35%;
+    margin-top: 25px;
+    padding: 10px;
+    display: flex;
+    margin-bottom: 20px;
+    border: solid 1px black;
+}
+
+.song-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.details {
+    text-align: center;
+}
+
+.song-info img {
+    width: 20%;
+    border-radius: 10px;
+    display: block;
+}
+
+.song-info h3 {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.song-info p {
+    width: 100%;
+}
+
+/*SONGS LIST BLOCK*/
+.songs-list {
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 300px;
+    border-radius: 8px;
+}
+
+table tr th {
+    table-layout: fixed;
+    font-size: 17px;
+    font-weight: bold;
+    background-color: rgb(166, 166, 166);
+}
+
+table tr td {
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: rgba(240, 229, 237, 0.884);
+}
+
+table tr th:hover {
+    text-decoration: underline;
+}
+
+table img {
+    width: 25%;
+}
+
+/*CONTROL BUTTONS*/
+.control-buttons {
+    display: flex;
+    align-items: center;
+    margin-top: -40px;
+}
+
+.control-buttons img {
+    padding: 5%;
+    width: 25%;
+    cursor: pointer;
+    margin-right: 25px;
+    margin-left: -40px;
+}
+
+.control-buttons div {
+    border: 1px solid black;
+    width: 100%;
+}
+
+/*EQUALIZER*/
+
+
+
+/*RADIO STATION*/
+.radio-stations {
+    margin: auto;
+    height: auto;
+    border: solid 1px black;
+    text-align: center;
+    padding: 4px;
+}
+
+.radio-stations h3 {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+/*PROGRESS BAR*/
+.progression-bar {
+    border: solid 1px black;
+    margin-left: 40px;
+    height: 30px;
+    margin: auto;
+}
