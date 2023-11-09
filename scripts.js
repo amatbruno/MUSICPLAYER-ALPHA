@@ -70,6 +70,8 @@ const playButton = document.querySelector(".play-button");
 const pauseButton = document.querySelector(".pause-button");
 const returnButton = document.querySelector(".return-button");
 const nextButton = document.querySelector(".next-button");
+const progressBar = document.getElementById("progress");
+const progressBarPos = document.getElementById("progress-bar");
 
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
@@ -122,6 +124,29 @@ function playSelectedSong() {
             const songId = row.dataset.songId;
             const selectedSong = songs[songId];
 
+            if (sound) {
+                sound.stop();
+            }
+
+            sound = new Howl({
+                src: [selectedSong.src],
+                volume: 0.5
+            })
+
+            sound.play();
+
+            const durationSongs = sound.duration();
+
+            setInterval(() => {
+                const currentTime = sound.seek();
+                const progress = (currentTime / durationSongs) * 100;
+
+                progressBar.style.width = `${progress}%`;
+            })
+
+            playButton.style.display = "none";
+            pauseButton.style.display = "block";
+
             songImage.src = selectedSong.img;
             songTitle.textContent = selectedSong.title;
             songArtist.textContent = selectedSong.artist;
@@ -156,16 +181,25 @@ playSelectedSong();
 playButton.addEventListener("click", function () {
     if (!sound) {
         sound = new Howl({
-            src: [songs[0].src]
-            //volume: 0.5
+            src: [songs[0].src],
+            volume: 0.5
         });
     }
 
     sound.play();
+
+    const durationSongs = sound.duration();
+
+    setInterval(() => {
+        const currentTime = sound.seek();
+        const progress = (currentTime / durationSongs) * 100;
+
+        progressBar.style.width = `${progress}%`;
+    })
+
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 });
-
 
 pauseButton.addEventListener("click", function () {
     sound.pause();
@@ -173,15 +207,42 @@ pauseButton.addEventListener("click", function () {
     pauseButton.style.display = "none";
 });
 
+progressBarPos.addEventListener('click', (event) => {
+    const durationSongs = sound.duration();
 
-// function play() {
-//     if (sound.playing()) {
-//         buttonPlay.innerText = 'Play';
-//         sound.pause();
-//     }
-//     else {
-//         buttonPlay.innerText = 'Pause';
-//         sound.play();
-//     }
-// }
-// buttonPlay.addEventListener("click", play(), false);
+    //GET THE CLICK POS INSIDE PROGRESS BAR
+    const progressBarRect = progressBar.getBoundingClientRect();
+    const clickX = event.clientX - progressBarRect.left;
+
+    //CALCULE THE % AT THE CLICKED POS
+    const newProgress = (clickX / progressBar.offsetWidth) * 100;
+
+    //UPDATE THE POSITION
+    document.getElementById('progress').style.width = `${newProgress}%`;
+
+    const newPosition = (newProgress / 100) * durationSongs;
+    sound.stop();
+
+    const finalPosition = Math.min(newPosition, durationSongs);
+
+    //DEFINE THE NEW POSITION AND PLAY SOUND AGAIN
+    sound.seek(finalPosition);
+    sound.play();
+
+    //RECURSIVE FUNCTION TO UPDATE THE PROGRESS BAR
+    function updateProgress() {
+        const currentTime = sound.seek();
+        const progress = (currentTime / durationSongs) * 100;
+
+        document.getElementById('progress').style.width = `${progress}%`;
+
+        if (!sound.playing()) {
+            return;
+        }
+
+        requestAnimationFrame(updateProgress);
+    }
+    updateProgress();
+
+});
+
