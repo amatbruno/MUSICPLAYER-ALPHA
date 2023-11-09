@@ -72,6 +72,9 @@ const returnButton = document.querySelector(".return-button");
 const nextButton = document.querySelector(".next-button");
 const progressBar = document.getElementById("progress");
 const progressBarPos = document.getElementById("progress-bar");
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
 
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
@@ -175,6 +178,12 @@ function playRadio(stationIndex) {
 //FUNCTIONS CALLING
 listSongs();
 playSelectedSong();
+
+
+//EQUALIZER SECTION
+canvas.width = 220;
+canvas.height = "220";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
 //LISTENERS
