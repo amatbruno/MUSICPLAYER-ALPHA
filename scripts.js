@@ -3,7 +3,7 @@ const songs = [{
     img: 'https://imgs.search.brave.com/4utU7dd-hTGeLy0FOv2ujN0voiRqcby1h2xuKRsvifw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLTRkMmEw/Y2NmLWFkYjctNGYz/Yy1hYzg4LWE2MGFm/ZWJmMDg1Yi0wLXQ1/MDB4NTAwLmpwZw',
     title: 'Quizás, Tal vez',
     artist: 'Eladio Carrión',
-    duration: '3:00'
+    duration: '2:27'
 },
 {
     src: '../music/song2.mp3',
@@ -31,7 +31,7 @@ const songs = [{
     img: 'https://imgs.search.brave.com/nAZkPX7pmfze_u8eC9nzP2MDAbhuefw0OEyCUEasthQ/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tcDN0/ZWNhLmFwcC9pbWFn/ZXMvOTcyNjBfMzUw/XzIwMjEwODIzMTYy/MjU4LmpwZw',
     title: '23 Preguntas',
     artist: 'Anuel AA',
-    duration: '3:00'
+    duration: '4:11'
 },
 {
     src: '../music/song6.mp3',
@@ -58,7 +58,7 @@ const songs = [{
 const radioStations = [
     {
         name: "Los 40 FM",
-        url: "https://los40.com/los40_urban/programacion?autoplay=true"
+        url: "http://play.rockantenne.de/rockantenne.m3u"
     },
     {
         name: "Cadena 100",
