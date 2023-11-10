@@ -57,12 +57,24 @@ const songs = [{
 
 const radioStations = [
     {
-        name: "Flaix FM",
-        url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
+        name: "Los 40 FM",
+        url: "https://los40.com/los40_urban/programacion?autoplay=true"
     },
     {
-        name: "Radio Marca",
-        url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
+        name: "Cadena 100",
+        url: ""
+    },
+    {
+        name: "Radiolé",
+        url: ""
+    },
+    {
+        name: "Flaix FM",
+        url: ""
+    },
+    {
+        name: "KISS FM",
+        url: ""
     }
 ];
 
@@ -83,7 +95,7 @@ const ctx = canvas.getContext("2d");
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
-let sound;
+let sound, currentSongIndex = 0;
 
 //FUNCTION TO DISPLAY SONGS DATASET
 function listSongs() {
@@ -130,6 +142,12 @@ function playSelectedSong() {
             const songId = row.dataset.songId;
             const selectedSong = songs[songId];
 
+            tableRows.forEach((otherRow) => {
+                otherRow.classList.remove("focus-played-song", "selected-song");
+            });
+
+            row.classList.add("focus-played-song", "selected-song");
+
             if (sound) {
                 sound.stop();
             }
@@ -156,6 +174,7 @@ function playRadio(stationIndex) {
 
     if (sound) {
         sound.stop();
+        sound.unload();
     }
 
     sound = new Howl({
@@ -164,7 +183,16 @@ function playRadio(stationIndex) {
         autoplay: true
     });
 
-    sound.play();
+    sound.on('play', function () {
+        requestAnimationFrame(updateProgressBar);
+    });
+
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+
+    songImage.src = "resources/cdSample.png";
+    songTitle.textContent = station.name;
+    songArtist.textContent = "Emisora de radio local";
 }
 
 //FUNCTION TO UPDATE THE VOLUME
@@ -194,7 +222,6 @@ playButton.addEventListener("click", function () {
             volume: 0.5
         });
     }
-
     sound.play();
 
     playButton.style.display = "none";
@@ -207,8 +234,78 @@ pauseButton.addEventListener("click", function () {
     pauseButton.style.display = "none";
 });
 
-volumeInput.addEventListener("input", function() {
+volumeInput.addEventListener("input", function () {
     updateVolume();
 });
 
+returnButton.addEventListener("click", function () {
+    if (sound) {
+        sound.stop();
+        sound.unload();
+    }
+
+    currentSongIndex = (currentSongIndex - 1) % songs.length;
+
+    const selectedSong = songs[currentSongIndex];
+
+    sound = new Howl({
+        src: [selectedSong.src],
+        volume: 0.5
+    });
+
+    sound.play();
+
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+
+    songImage.src = selectedSong.img;
+    songTitle.textContent = selectedSong.title;
+    songArtist.textContent = selectedSong.artist;
+
+    tableRows.forEach((otherRow) => {
+        otherRow.classList.remove("focus-played-song", "selected-song");
+    });
+
+    tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+});
+
+nextButton.addEventListener("click", function () {
+    if (sound) {
+        sound.stop();
+        sound.unload();
+    }
+
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+
+    const selectedSong = songs[currentSongIndex];
+
+    sound = new Howl({
+        src: [selectedSong.src],
+        volume: 0.5
+    });
+
+    sound.play();
+
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+
+    songImage.src = selectedSong.img;
+    songTitle.textContent = selectedSong.title;
+    songArtist.textContent = selectedSong.artist;
+
+    tableRows.forEach((otherRow) => {
+        otherRow.classList.remove("focus-played-song", "selected-song");
+    });
+
+    tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+});
+
+
 //LISTENERS FOR RADIO STATIONS BUTTONS
+document.getElementById("radio-station1").addEventListener("click", function () {
+    playRadio(0);
+});
+
+document.getElementById("radio-station2").addEventListener("click", function () {
+    playRadio(1);
+});

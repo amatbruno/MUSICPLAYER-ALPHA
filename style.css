@@ -89,7 +89,7 @@ table tr td {
 }
 
 table tr:hover {
-    background-color: rgba(240, 229, 237, 0.884);
+    background-color: rgba(207, 207, 207, 0.671);
 }
 
 table tr th:hover {
@@ -99,6 +99,11 @@ table tr th:hover {
 
 table img {
     width: 50px;
+}
+
+.focus-played-song {
+    color: rgba(226, 163, 209, 0.966);
+    font-weight: 900;
 }
 
 
