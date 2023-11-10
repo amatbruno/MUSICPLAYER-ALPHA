@@ -55,12 +55,16 @@ const songs = [{
     duration: '3:00'
 }];
 
-// const radioStations = [
-//     {
-//         name: "Los 40 FM",
-//         url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
-//     }
-// ];
+const radioStations = [
+    {
+        name: "Flaix FM",
+        url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
+    },
+    {
+        name: "Radio Marca",
+        url: "http://flaix.stream.flumotion.com/flaix/FLAIXfm.mp3"
+    }
+];
 
 //QUERY SELECTORS
 const songTitle = document.querySelector(".song-name");
@@ -70,8 +74,8 @@ const playButton = document.querySelector(".play-button");
 const pauseButton = document.querySelector(".pause-button");
 const returnButton = document.querySelector(".return-button");
 const nextButton = document.querySelector(".next-button");
-const progressBar = document.getElementById("progress");
-const progressBarPos = document.getElementById("progress-bar");
+const progressBar = document.getElementById("progress-bar");
+const volumeInput = document.getElementById("volume-bar");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -117,7 +121,6 @@ function listSongs() {
     });
 }
 
-
 //FUNCTION TO PLAY A SELECTED SONG FROM PLAYLIST
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
@@ -135,17 +138,7 @@ function playSelectedSong() {
                 src: [selectedSong.src],
                 volume: 0.5
             })
-
             sound.play();
-
-            const durationSongs = sound.duration();
-
-            setInterval(() => {
-                const currentTime = sound.seek();
-                const progress = (currentTime / durationSongs) * 100;
-
-                progressBar.style.width = `${progress}%`;
-            })
 
             playButton.style.display = "none";
             pauseButton.style.display = "block";
@@ -157,7 +150,7 @@ function playSelectedSong() {
     });
 }
 
-
+//FUNCTION FOR PLAYING RADIO
 function playRadio(stationIndex) {
     const station = radioStations[stationIndex];
 
@@ -174,6 +167,13 @@ function playRadio(stationIndex) {
     sound.play();
 }
 
+//FUNCTION TO UPDATE THE VOLUME
+function updateVolume() {
+    if (sound) {
+        const newVolume = volumeInput.value;
+        sound.volume(newVolume);
+    }
+}
 
 //FUNCTIONS CALLING
 listSongs();
@@ -197,15 +197,6 @@ playButton.addEventListener("click", function () {
 
     sound.play();
 
-    const durationSongs = sound.duration();
-
-    setInterval(() => {
-        const currentTime = sound.seek();
-        const progress = (currentTime / durationSongs) * 100;
-
-        progressBar.style.width = `${progress}%`;
-    })
-
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 });
@@ -216,42 +207,8 @@ pauseButton.addEventListener("click", function () {
     pauseButton.style.display = "none";
 });
 
-progressBarPos.addEventListener('click', (event) => {
-    const durationSongs = sound.duration();
-
-    //GET THE CLICK POS INSIDE PROGRESS BAR
-    const progressBarRect = progressBar.getBoundingClientRect();
-    const clickX = event.clientX - progressBarRect.left;
-
-    //CALCULE THE % AT THE CLICKED POS
-    const newProgress = (clickX / progressBar.offsetWidth) * 100;
-
-    //UPDATE THE POSITION
-    document.getElementById('progress').style.width = `${newProgress}%`;
-
-    const newPosition = (newProgress / 100) * durationSongs;
-    sound.stop();
-
-    const finalPosition = Math.min(newPosition, durationSongs);
-
-    //DEFINE THE NEW POSITION AND PLAY SOUND AGAIN
-    sound.seek(finalPosition);
-    sound.play();
-
-    //RECURSIVE FUNCTION TO UPDATE THE PROGRESS BAR
-    function updateProgress() {
-        const currentTime = sound.seek();
-        const progress = (currentTime / durationSongs) * 100;
-
-        document.getElementById('progress').style.width = `${progress}%`;
-
-        if (!sound.playing()) {
-            return;
-        }
-
-        requestAnimationFrame(updateProgress);
-    }
-    updateProgress();
-
+volumeInput.addEventListener("input", function() {
+    updateVolume();
 });
 
+//LISTENERS FOR RADIO STATIONS BUTTONS

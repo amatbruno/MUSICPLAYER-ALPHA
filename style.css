@@ -12,6 +12,8 @@ body {
     font-family: 'Kanit', sans-serif;
 }
 
+
+
 /*MAIN CONTAINER BLOCK*/
 .container-fluid {
     background-color: aliceblue;
@@ -24,6 +26,8 @@ body {
     border-radius: 10px;
     box-shadow: 0 7px 18px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
 }
+
+
 
 /* SONGS INFO BLOCK*/
 .song-info {
@@ -61,6 +65,8 @@ body {
     width: 100%;
 }
 
+
+
 /*SONGS LIST BLOCK*/
 .songs-list {
     width: 100%;
@@ -73,7 +79,7 @@ table tr th {
     table-layout: fixed;
     font-size: 17px;
     font-weight: bold;
-    background-color: rgb(166, 166, 166);
+    background-color: rgba(160, 160, 160, 0.548);
 }
 
 table tr td {
@@ -88,11 +94,14 @@ table tr:hover {
 
 table tr th:hover {
     text-decoration: underline;
+    color: rgba(205, 131, 255, 0.726);
 }
 
 table img {
     width: 50px;
 }
+
+
 
 /*CONTROL BUTTONS*/
 .control-buttons {
@@ -114,6 +123,8 @@ table img {
     width: 100%;
 }
 
+
+
 /*EQUALIZER*/
 equalizer-section {
     display: flex;
@@ -122,6 +133,7 @@ equalizer-section {
     align-items: center;
     height: 100%;
 }
+
 
 
 /*RADIO STATION*/
@@ -141,7 +153,11 @@ equalizer-section {
 }
 
 .radio-stations button {
-    margin-right: 40px;
+    margin-right: 10px;
+    padding: 3px;
+    width: 100%;
+    justify-content: center;
+
 }
 
 .radio-button {
@@ -152,23 +168,27 @@ equalizer-section {
     padding: 2px;
     border: 1px solid transparent;
     font-size: 19px;
+    color: rgb(231, 244, 255);
 }
 
 .radio-button:hover {
     border: solid 1px rgb(88, 88, 88);
+    color: rgb(88, 88, 88);
 }
+
+
 
 /*PROGRESS BAR*/
 #progress-bar {
-    border: solid 1px black;
     margin-left: 40px;
     margin: auto;
     height: 15px;
+    background-color: blueviolet;
 }
 
-#progress {
-    height: 100%;
-    width: 0px;
-    background-color: rgba(212, 148, 255, 0.726);
-    border: none;
+
+
+/*VOLUME CONTROL*/
+#progress-bar {
+    width: 100%;
 }
