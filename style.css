@@ -13,7 +13,6 @@ body {
 }
 
 
-
 /*MAIN CONTAINER BLOCK*/
 .container-fluid {
     background-color: aliceblue;
@@ -51,7 +50,7 @@ body {
 }
 
 .song-info img {
-    width: 16%;
+    width: 21%;
     border-radius: 10px;
     display: block;
 }

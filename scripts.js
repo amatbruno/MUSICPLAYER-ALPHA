@@ -11,21 +11,21 @@ const songs = [
         img: 'https://imgs.search.brave.com/LK4SUuPdNZwxcT49dN4PODU6kCnj3Dxs1O_gqIFR7jE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zcC1h/by5zaG9ydHBpeGVs/LmFpL2NsaWVudC9x/X2dsb3NzeSxyZXRf/aW1nLHdfMzAwL2h0/dHBzOi8vd3d3LnBv/bGFybmlnaHRzLm5l/dC93cC1jb250ZW50/L3VwbG9hZHMvMjAy/MC8xMi9iZW55LWpy/LTMwLTMwMHgzMDAu/anBn',
         title: '8 a.m',
         artist: 'Beny Jr',
-        duration: '3:00'
+        duration: '3:12'
     },
     {
         src: '../music/song3.mp3',
         img: 'https://imgs.search.brave.com/PUqBgf0DgsOHM4GknS1K7uA_466AnxCLqe9SfWb5Adg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLUZ4anRk/MmhKelkxVi0wLXQ1/MDB4NTAwLmpwZw',
         title: 'No estuviste en lo malo',
         artist: 'Morad',
-        duration: '3:00'
+        duration: '4:07'
     },
     {
         src: '../music/song4.mp3',
         img: 'https://imgs.search.brave.com/HozeEts6DC5xmaiwE8f9Vn1d1o9dDwbbeDi7XMqW_zo/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pMS5z/bmRjZG4uY29tL2Fy/dHdvcmtzLXZSdGd6/ZW9jYmZaczhXWTct/RDBCOVFnLXQ1MDB4/NTAwLmpwZw',
         title: 'Columbia',
         artist: 'Quevedo',
-        duration: '3:00'
+        duration: '3:06'
     },
     {
         src: '../music/song5.mp3',
@@ -39,43 +39,39 @@ const songs = [
         img: 'resources/albumBlackTho.png',
         title: 'Ten Cuidado',
         artist: 'Blackthoven',
-        duration: '3:00'
+        duration: '2:39'
     },
     {
         src: '../music/song7.mp3',
         img: 'https://imgs.search.brave.com/lryUZe9amOE5Re8LsA1yQzPBRE2Bwe_PXL0mn7P0FQI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZW4vdGh1bWIv/Yy9jYS9MaWxfQmFi/eV8tX1RoZV9CaWdn/ZXJfUGljdHVyZS5w/bmcvMjIwcHgtTGls/X0JhYnlfLV9UaGVf/QmlnZ2VyX1BpY3R1/cmUucG5n',
         title: 'The Bigger Picture',
         artist: 'Lil Baby',
-        duration: '3:00'
+        duration: '4:12'
     },
     {
         src: '../music/song8.mp3',
         img: 'https://imgs.search.brave.com/lVZQwIMDMZA8hWzgnbaT8uYEbPCduYm6xBesXVtVzGQ/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtZXUuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzYxcHloSkIwWmRM/Ll9BQ19VTDIwMF9T/UjIwMCwyMDBfLmpw/Zw',
         title: 'Black & White',
         artist: 'Juice Wrld',
-        duration: '3:00'
+        duration: '3:06'
     }
 ];
 const radioStations = [
     {
-        name: "Los 40 FM",
-        url: "http://194.169.201.177:8085/live3.mp3"
+        name: "Mirchi",
+        url: "http://peridot.streamguys.com:7150/Mirchi"
     },
     {
-        name: "Europa FM",
-        url: "http://antena3.stream.flumotion.com/antena3/europafm.mp3.m3u"
+        name: "Antenne Bayern",
+        url: "http://play.antenne.de/antenne.m3u"
     },
     {
-        name: "Radiolé",
-        url: "http://22713.live.streamtheworld.com/RADIOLE.mp3"
+        name: "Bayer 3",
+        url: "https://streams.br.de/bayern3_1.m3u"
     },
     {
-        name: "Flaix FM",
-        url: ""
-    },
-    {
-        name: "KISS FM",
-        url: ""
+        name: "Rock Antenne",
+        url: "http://play.rockantenne.de/rockantenne.m3u"
     }
 ];
 
@@ -95,7 +91,28 @@ const ctx = canvas.getContext("2d");
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
-let sound, currentSongIndex = 0;
+const audioElement = new Audio();
+audioElement.src = songs[0].src;
+
+let sound = new Howl({
+    src: [songs[0].src],
+    volume: 0.5
+});
+
+let currentSongIndex = 0;
+
+
+//EQUALIZER CONSTANTS
+const audioContext = new (window.AudioContext)();
+const analyser = audioContext.createAnalyser();
+analyser.fftSize = 256;
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+const source = audioContext.createMediaElementSource(audioElement);
+source.connect(analyser);
+analyser.connect(audioContext.destination);
+
 
 //FUNCTION TO DISPLAY SONGS DATASET
 function listSongs() {
@@ -205,6 +222,63 @@ function updateVolume() {
     }
 }
 
+//FUNCTION TO CHANGE THE SONG
+function changeSong(index) {
+    if (sound) {
+        sound.stop();
+        sound.unload();
+    }
+
+    currentSongIndex = (index + songs.length) % songs.length;
+
+    const selectedSong = songs[currentSongIndex];
+
+    sound = new Howl({
+        src: [selectedSong.src],
+        volume: 0.5
+    });
+
+    sound.play();
+
+    playButton.style.display = "none";
+    pauseButton.style.display = "block";
+
+    songImage.src = selectedSong.img;
+    songTitle.textContent = selectedSong.title;
+    songArtist.textContent = selectedSong.artist;
+
+    tableRows.forEach((otherRow) => {
+        otherRow.classList.remove("focus-played-song", "selected-song");
+    });
+
+    tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+}
+
+//FUNCTION TO DRAW THE EQUALIZER
+function drawEqualizer() {
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const barWidth = (canvas.width / bufferLength) * 2.5;
+    let barHeight;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] / 2;
+
+        ctx.fillStyle = `rgb(${barHeight + 100},50,50)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+        x += barWidth + 1;
+    }
+
+    requestAnimationFrame(drawEqualizer);
+}
+
+listSongs();
+playSelectedSong();
+drawEqualizer();
+
 
 //LISTENERS
 playButton.addEventListener("click", function () {
@@ -231,65 +305,11 @@ volumeInput.addEventListener("input", function () {
 });
 
 returnButton.addEventListener("click", function () {
-    if (sound) {
-        sound.stop();
-        sound.unload();
-    }
-
-    currentSongIndex = (currentSongIndex - 1) % songs.length;
-
-    const selectedSong = songs[currentSongIndex];
-
-    sound = new Howl({
-        src: [selectedSong.src],
-        volume: 0.5
-    });
-
-    sound.play();
-
-    playButton.style.display = "none";
-    pauseButton.style.display = "block";
-
-    songImage.src = selectedSong.img;
-    songTitle.textContent = selectedSong.title;
-    songArtist.textContent = selectedSong.artist;
-
-    tableRows.forEach((otherRow) => {
-        otherRow.classList.remove("focus-played-song", "selected-song");
-    });
-
-    tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+    changeSong(currentSongIndex - 1);
 });
 
 nextButton.addEventListener("click", function () {
-    if (sound) {
-        sound.stop();
-        sound.unload();
-    }
-
-    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-
-    const selectedSong = songs[currentSongIndex];
-
-    sound = new Howl({
-        src: [selectedSong.src],
-        volume: 0.5
-    });
-
-    sound.play();
-
-    playButton.style.display = "none";
-    pauseButton.style.display = "block";
-
-    songImage.src = selectedSong.img;
-    songTitle.textContent = selectedSong.title;
-    songArtist.textContent = selectedSong.artist;
-
-    tableRows.forEach((otherRow) => {
-        otherRow.classList.remove("focus-played-song", "selected-song");
-    });
-
-    tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+    changeSong(currentSongIndex + 1);
 });
 
 
@@ -308,8 +328,4 @@ document.getElementById("radio-station3").addEventListener("click", function () 
 
 document.getElementById("radio-station4").addEventListener("click", function () {
     playRadio(3);
-});
-
-document.getElementById("radio-station5").addEventListener("click", function () {
-    playRadio(4);
 });
