@@ -92,16 +92,10 @@ const volumeInput = document.getElementById("volume-bar");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
 let sound, currentSongIndex = 0;
-let analyser, bufferLength, dataArray;
-
-// analyser = Howler.ctx.createAnalyser();
-// bufferLength = analyser.frequencyBinCount();
-// dataArray = new Uint8Array(bufferLength);
 
 //FUNCTION TO DISPLAY SONGS DATASET
 function listSongs() {
@@ -210,24 +204,6 @@ function updateVolume() {
         sound.volume(newVolume);
     }
 }
-
-//FUNCTION TO LOAD THE EQUALIZER
-// function loadEqualizer() {
-//     Howler.masterGain.connect(analyser);
-//     analyser.connect(Howler.ctx.destination);
-//     analyser.fftSize = 2048;
-//     analyser.getByteTimeDomainData(dataArray);
-// }
-
-//FUNCTIONS CALLING
-listSongs();
-playSelectedSong();
-
-
-//EQUALIZER SECTION
-canvas.width = 220;
-canvas.height = "220";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
 //LISTENERS
