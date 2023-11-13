@@ -88,6 +88,7 @@ const volumeInput = document.getElementById("volume-bar");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
+
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
@@ -149,7 +150,6 @@ function listSongs() {
         row.dataset.songId = index;
     });
 }
-
 //FUNCTION TO PLAY A SELECTED SONG FROM PLAYLIST
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
@@ -184,7 +184,6 @@ function playSelectedSong() {
         });
     });
 }
-
 //FUNCTION FOR PLAYING RADIO
 function playRadio(stationIndex) {
     const station = radioStations[stationIndex];
@@ -213,7 +212,6 @@ function playRadio(stationIndex) {
     songTitle.textContent = station.name;
     songArtist.textContent = "Emisora de radio local";
 }
-
 //FUNCTION TO UPDATE THE VOLUME
 function updateVolume() {
     if (sound) {
@@ -221,7 +219,6 @@ function updateVolume() {
         sound.volume(newVolume);
     }
 }
-
 //FUNCTION TO CHANGE THE SONG
 function changeSong(index) {
     if (sound) {
@@ -253,7 +250,6 @@ function changeSong(index) {
 
     tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
 }
-
 //FUNCTION TO DRAW THE EQUALIZER
 function drawEqualizer() {
     analyser.getByteFrequencyData(dataArray);
@@ -293,21 +289,17 @@ playButton.addEventListener("click", function () {
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 });
-
 pauseButton.addEventListener("click", function () {
     sound.pause();
     playButton.style.display = "block";
     pauseButton.style.display = "none";
 });
-
 volumeInput.addEventListener("input", function () {
     updateVolume();
 });
-
 returnButton.addEventListener("click", function () {
     changeSong(currentSongIndex - 1);
 });
-
 nextButton.addEventListener("click", function () {
     changeSong(currentSongIndex + 1);
 });
@@ -317,15 +309,12 @@ nextButton.addEventListener("click", function () {
 document.getElementById("radio-station1").addEventListener("click", function () {
     playRadio(0);
 });
-
 document.getElementById("radio-station2").addEventListener("click", function () {
     playRadio(1);
 });
-
 document.getElementById("radio-station3").addEventListener("click", function () {
     playRadio(2);
 });
-
 document.getElementById("radio-station4").addEventListener("click", function () {
     playRadio(3);
 });
