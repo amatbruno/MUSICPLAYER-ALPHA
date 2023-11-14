@@ -16,8 +16,8 @@
                 <img class="cover-song" src="resources/cdSample.png">
                 <div class="song-details">
                     <div class="details col-lg-5">
-                        <h3 class="song-name">song-name</h3>
-                        <p class="author-name">author-name</p>
+                        <h3 class="song-name">----------</h3>
+                        <p class="author-name">----------</p>
                     </div>
                     <div class="control-buttons col-lg-10 col-md-9">
                         <img class="return-button" src="resources/playPrevious.png">
@@ -27,7 +27,9 @@
                         <input type="range" id="volume-bar" min="0" max="1" value="0.5" step="0.01" />
                     </div>
                 </div>
-                <input type="range" id="progress-bar" min="0" max="1" step="0.01" value="0" />
+                <div id="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
             </div>
 
             <div class="col-lg-8 col-md-8 songs-list">
@@ -63,5 +65,6 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" defer></script>
+<!-- <script src="howler.min.js"></script> -->
 <script src="scripts.js" defer></script>
 </html>

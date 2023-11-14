@@ -84,6 +84,7 @@ const pauseButton = document.querySelector(".pause-button");
 const returnButton = document.querySelector(".return-button");
 const nextButton = document.querySelector(".next-button");
 const progressBar = document.getElementById("progress-bar");
+const progressBarContainer = document.getElementById("progress-container");
 const volumeInput = document.getElementById("volume-bar");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -114,7 +115,24 @@ const source = audioContext.createMediaElementSource(audioElement);
 source.connect(analyser);
 analyser.connect(audioContext.destination);
 
+function initializeHowler(songIndex) {
+    if (sound) {
+        sound.stop();
+        sound.unload();
+    }
 
+    const selectedSong = songs[songIndex];
+
+    sound = new Howl({
+        src: [selectedSong.src],
+        volume: 0.5,
+        onplay: function () {
+            requestAnimationFrame(updateProgressBar);
+        },
+    });
+
+    sound.play();
+}
 //FUNCTION TO DISPLAY SONGS DATASET
 function listSongs() {
     const table = document.querySelector("table");
@@ -171,12 +189,17 @@ function playSelectedSong() {
 
             sound = new Howl({
                 src: [selectedSong.src],
-                volume: 0.5
+                volume: 0.5,
+                onplay: function () {
+                    requestAnimationFrame(updateProgressBar);
+                }
             })
             sound.play();
 
             playButton.style.display = "none";
             pauseButton.style.display = "block";
+            progressBar.style.display = "block";
+            progressBarContainer.style.display = "block";
 
             songImage.src = selectedSong.img;
             songTitle.textContent = selectedSong.title;
@@ -201,10 +224,6 @@ function playRadio(stationIndex) {
     });
     sound.play();
 
-    sound.on('play', function () {
-        requestAnimationFrame(updateProgressBar);
-    });
-
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 
@@ -217,6 +236,15 @@ function updateVolume() {
     if (sound) {
         const newVolume = volumeInput.value;
         sound.volume(newVolume);
+    }
+}
+//FUNCTION TO UPDATE THE PROGRESS BAR
+function updateProgressBar() {
+    const progress = (sound.seek() / sound.duration()) * 100;
+    progressBar.style.width = progress + '%';
+
+    if (sound.playing()) {
+        requestAnimationFrame(updateProgressBar);
     }
 }
 //FUNCTION TO CHANGE THE SONG
@@ -281,7 +309,10 @@ playButton.addEventListener("click", function () {
     if (!sound) {
         sound = new Howl({
             src: [songs[0].src],
-            volume: 0.5
+            volume: 0.5,
+            onplay: function () {
+                requestAnimationFrame(updateProgressBar);
+            }
         });
     }
     sound.play();
@@ -303,18 +334,39 @@ returnButton.addEventListener("click", function () {
 nextButton.addEventListener("click", function () {
     changeSong(currentSongIndex + 1);
 });
+progressBarContainer.addEventListener("click", function (e) {
+    const clickPosition = e.clientX - progressBarContainer.getBoundingClientRect().left;
+    const percentage = clickPosition / progressBarContainer.clientWidth;
+    const newPosition = percentage * sound.duration();
+
+    sound.seek(newPosition);
+});
+
+
+//ONLY UPDATE PROGRESS BAR WHILE MUSIC IS PLAYING
+if (sound.playing()) {
+    initializeHowler(0);
+}
 
 
 //LISTENERS FOR RADIO STATIONS BUTTONS
 document.getElementById("radio-station1").addEventListener("click", function () {
     playRadio(0);
+    progressBar.style.display = "none";
+    progressBarContainer.style.display = "none";
 });
 document.getElementById("radio-station2").addEventListener("click", function () {
     playRadio(1);
+    progressBar.style.display = "none";
+    progressBarContainer.style.display = "none";
 });
 document.getElementById("radio-station3").addEventListener("click", function () {
     playRadio(2);
+    progressBar.style.display = "none";
+    progressBarContainer.style.display = "none";
 });
 document.getElementById("radio-station4").addEventListener("click", function () {
     playRadio(3);
+    progressBar.style.display = "none";
+    progressBarContainer.style.display = "none";
 });
