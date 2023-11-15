@@ -1,3 +1,4 @@
+//ARRAY OBJECTS
 const songs = [
     {
         src: '../music/song1.mp3',
@@ -75,6 +76,7 @@ const radioStations = [
     }
 ];
 
+
 //QUERY SELECTORS
 const songTitle = document.querySelector(".song-name");
 const songArtist = document.querySelector(".author-name");
@@ -93,6 +95,7 @@ const ctx = canvas.getContext("2d");
 //INITIALLY HIDE PAUSE BUTTON
 pauseButton.style.display = "none";
 
+//HOWLER INTIAL DECLARATION
 const audioElement = new Audio();
 audioElement.src = songs[0].src;
 
@@ -100,7 +103,6 @@ let sound = new Howl({
     src: [songs[0].src],
     volume: 0.5
 });
-
 let currentSongIndex = 0;
 
 
@@ -114,6 +116,7 @@ const dataArray = new Uint8Array(bufferLength);
 const source = audioContext.createMediaElementSource(audioElement);
 source.connect(analyser);
 analyser.connect(audioContext.destination);
+
 
 function initializeHowler(songIndex) {
     if (sound) {
@@ -137,34 +140,34 @@ function initializeHowler(songIndex) {
 function listSongs() {
     const table = document.querySelector("table");
 
+    //List the array songs and display a row for each one
     songs.forEach((element, index) => {
         const row = table.insertRow();
 
-        //NEW CELL FOR EACH COLUMN
         const cell = row.insertCell(0);
         const cell2 = row.insertCell(1);
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
 
-        //CREATE THE ELEMENTS
+        //Cell creation
         const cov = document.createElement("img");
         const tit = document.createElement("td");
         const art = document.createElement("td");
         const dur = document.createElement("td");
 
-        //ASSIGN CELLS TO THE ARRAY ELEMENTS
+        //Assign them to each key value
         cov.src = element.img;
         tit.innerHTML = element.title;
         art.innerHTML = element.artist;
         dur.innerHTML = element.duration;
 
-        //APPEND CHILD IN ALL TABLE TD'S
+        //Append to to his child cell
         cell.appendChild(cov);
         cell2.appendChild(tit);
         cell3.appendChild(art);
         cell4.appendChild(dur);
 
-        //ASSIGN UNIQUE ID TO EACH ROW
+        //Assign unique ID
         row.dataset.songId = index;
     });
 }
@@ -172,6 +175,7 @@ function listSongs() {
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
 
+    //List the rows for the table above
     tableRows.forEach((row) => {
         row.addEventListener("click", function () {
             const songId = row.dataset.songId;
@@ -229,11 +233,12 @@ function playRadio(stationIndex) {
     sound = new Howl({
         src: [station.url],
         html5: true,
-        format: ['mp3'],
+        format: ['mp3', 'm3u'],
         autoplay: true
     });
     sound.play();
 
+    //HTML Display updates
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 
@@ -264,6 +269,7 @@ function changeSong(index) {
         sound.unload();
     }
 
+    //Move to the next song by his index
     currentSongIndex = (index + songs.length) % songs.length;
 
     const selectedSong = songs[currentSongIndex];
@@ -275,6 +281,7 @@ function changeSong(index) {
 
     sound.play();
 
+    //HTML Display updates
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 
@@ -282,10 +289,10 @@ function changeSong(index) {
     songTitle.textContent = selectedSong.title;
     songArtist.textContent = selectedSong.artist;
 
+    //Emphatize the song actually playing
     tableRows.forEach((otherRow) => {
         otherRow.classList.remove("focus-played-song", "selected-song");
     });
-
     tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
 }
 //FUNCTION TO DRAW THE EQUALIZER
@@ -308,10 +315,10 @@ function drawEqualizer() {
     }
 }
 
+//FUNCTIONS CALLING
 listSongs();
 playSelectedSong();
 drawEqualizer();
-
 
 //LISTENERS
 playButton.addEventListener("click", function () {
@@ -327,6 +334,7 @@ playButton.addEventListener("click", function () {
     }
     sound.play();
 
+    //On end song, go for next
     sound.on('end', function () {
         changeSong(currentSongIndex + 1);
         updateProgressBar();
