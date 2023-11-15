@@ -86,7 +86,7 @@ const nextButton = document.querySelector(".next-button");
 const progressBar = document.getElementById("progress-bar");
 const progressBarContainer = document.getElementById("progress-container");
 const volumeInput = document.getElementById("volume-bar");
-const canvas = document.querySelector("canvas");
+const canvas = document.getElementById("equalizer");
 const ctx = canvas.getContext("2d");
 
 
@@ -105,7 +105,7 @@ let currentSongIndex = 0;
 
 
 //EQUALIZER CONSTANTS
-const audioContext = new (window.AudioContext)();
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const analyser = audioContext.createAnalyser();
 analyser.fftSize = 256;
 const bufferLength = analyser.frequencyBinCount;
@@ -177,12 +177,14 @@ function playSelectedSong() {
             const songId = row.dataset.songId;
             const selectedSong = songs[songId];
 
+            //Empthatize the selected song
             tableRows.forEach((otherRow) => {
                 otherRow.classList.remove("focus-played-song", "selected-song");
             });
 
             row.classList.add("focus-played-song", "selected-song");
 
+            //If other song is playing stop it
             if (sound) {
                 sound.stop();
             }
@@ -192,10 +194,18 @@ function playSelectedSong() {
                 volume: 0.5,
                 onplay: function () {
                     requestAnimationFrame(updateProgressBar);
+                    drawEqualizer();
                 }
             })
             sound.play();
 
+            //On end song go for the next in the list
+            sound.on('end', function () {
+                changeSong(currentSongIndex + 1);
+                updateProgressBar();
+            });
+
+            //HTML Display updates
             playButton.style.display = "none";
             pauseButton.style.display = "block";
             progressBar.style.display = "block";
@@ -290,13 +300,12 @@ function drawEqualizer() {
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] / 2;
 
+        ctx.fillStyle = 'red';
         ctx.fillStyle = `rgb(${barHeight + 100},50,50)`;
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
     }
-
-    requestAnimationFrame(drawEqualizer);
 }
 
 listSongs();
@@ -312,10 +321,16 @@ playButton.addEventListener("click", function () {
             volume: 0.5,
             onplay: function () {
                 requestAnimationFrame(updateProgressBar);
+                drawEqualizer();
             }
         });
     }
     sound.play();
+
+    sound.on('end', function () {
+        changeSong(currentSongIndex + 1);
+        updateProgressBar();
+    });
 
     playButton.style.display = "none";
     pauseButton.style.display = "block";

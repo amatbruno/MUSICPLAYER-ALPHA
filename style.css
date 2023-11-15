@@ -21,11 +21,14 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    height: 85%;
+    height: 75%;
     border-radius: 10px;
     box-shadow: 0 7px 18px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
 }
 
+.row {
+    padding: 15px;
+}
 
 
 /* SONGS INFO BLOCK*/
@@ -50,7 +53,7 @@ body {
 }
 
 .song-info img {
-    width: 16%;
+    width: 18%;
     border-radius: 10px;
     display: block;
 }
@@ -93,7 +96,6 @@ table tr:hover {
 
 table tr th:hover {
     text-decoration: underline;
-    color: rgba(205, 131, 255, 0.726);
 }
 
 table img {
@@ -136,6 +138,11 @@ equalizer-section {
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+#equalizer {
+    width: 300px;
+    height: 150px;
 }
 
 
