@@ -1,4 +1,3 @@
-//ARRAY OBJECTS
 const songs = [
     {
         src: '../music/song1.mp3',
@@ -75,7 +74,65 @@ const radioStations = [
         url: "http://play.rockantenne.de/rockantenne.m3u"
     }
 ];
-
+const artistInfo = [
+    {
+        artistName: "Eladio Carrión",
+        realName: "Eladio Carrión Morales",
+        gender: "Male",
+        hit: "Coco Chanel",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        artistName: "Beny Jr",
+        realName: "unknow",
+        gender: "Male",
+        hit: "El precio del dinero",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl-ZWVC0NYUIks7hD-nYFDm8844YWB-K-pA&usqp=CAU"
+    },
+    {
+        artistName: "Morad",
+        realName: "Morad El Khattouti El Horami",
+        gender: "Male",
+        hit: "M.D.L.R",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        artistName: "Anuel AA",
+        realName: "Emmanuel Gazmey Santiago",
+        gender: "Male",
+        hit: "23 Preguntas",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        artistName: "Lil Baby",
+        realName: "Dominique Armani Jones",
+        gender: "Male",
+        hit: "Freestyle",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        artistName: "Bad Bunny",
+        realName: "Benito Antonio Martínez Ocasio",
+        gender: "Male",
+        hit: "La noche de anoche",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        artistName: "Bad Gyal",
+        realName: "Alba Farelo i Solé",
+        gender: "Male",
+        hit: "Duro remix",
+        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    }
+];
+const albumInfo = [
+    {
+        name: "",
+        artistsInvolved: "",
+        publishDate: "",
+        numberOfSongs: ""
+    }
+];
 
 //QUERY SELECTORS
 const songTitle = document.querySelector(".song-name");
@@ -87,15 +144,19 @@ const returnButton = document.querySelector(".return-button");
 const nextButton = document.querySelector(".next-button");
 const progressBar = document.getElementById("progress-bar");
 const progressBarContainer = document.getElementById("progress-container");
+const row = document.getElementById("row");
+const row2 = document.getElementById("row2");
 const volumeInput = document.getElementById("volume-bar");
-const canvas = document.getElementById("equalizer");
+const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+const artistsContainer = document.getElementById('artists-container');
+const artistSearcher = document.getElementById('artist-name');
+const allArtists = Array.from(artistsContainer.getElementsByTagName('img'));
 
 
-//INITIALLY HIDE PAUSE BUTTON
+//INITIALLY HIDING
 pauseButton.style.display = "none";
 
-//HOWLER INTIAL DECLARATION
 const audioElement = new Audio();
 audioElement.src = songs[0].src;
 
@@ -107,7 +168,7 @@ let currentSongIndex = 0;
 
 
 //EQUALIZER CONSTANTS
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const audioContext = new (window.AudioContext)();
 const analyser = audioContext.createAnalyser();
 analyser.fftSize = 256;
 const bufferLength = analyser.frequencyBinCount;
@@ -116,7 +177,6 @@ const dataArray = new Uint8Array(bufferLength);
 const source = audioContext.createMediaElementSource(audioElement);
 source.connect(analyser);
 analyser.connect(audioContext.destination);
-
 
 function initializeHowler(songIndex) {
     if (sound) {
@@ -140,34 +200,34 @@ function initializeHowler(songIndex) {
 function listSongs() {
     const table = document.querySelector("table");
 
-    //List the array songs and display a row for each one
     songs.forEach((element, index) => {
         const row = table.insertRow();
 
+        //NEW CELL FOR EACH COLUMN
         const cell = row.insertCell(0);
         const cell2 = row.insertCell(1);
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
 
-        //Cell creation
+        //CREATE THE ELEMENTS
         const cov = document.createElement("img");
         const tit = document.createElement("td");
         const art = document.createElement("td");
         const dur = document.createElement("td");
 
-        //Assign them to each key value
+        //ASSIGN CELLS TO THE ARRAY ELEMENTS
         cov.src = element.img;
         tit.innerHTML = element.title;
         art.innerHTML = element.artist;
         dur.innerHTML = element.duration;
 
-        //Append to to his child cell
+        //APPEND CHILD IN ALL TABLE TD'S
         cell.appendChild(cov);
         cell2.appendChild(tit);
         cell3.appendChild(art);
         cell4.appendChild(dur);
 
-        //Assign unique ID
+        //ASSIGN UNIQUE ID TO EACH ROW
         row.dataset.songId = index;
     });
 }
@@ -175,20 +235,17 @@ function listSongs() {
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
 
-    //List the rows for the table above
     tableRows.forEach((row) => {
         row.addEventListener("click", function () {
             const songId = row.dataset.songId;
             const selectedSong = songs[songId];
 
-            //Empthatize the selected song
             tableRows.forEach((otherRow) => {
                 otherRow.classList.remove("focus-played-song", "selected-song");
             });
 
             row.classList.add("focus-played-song", "selected-song");
 
-            //If other song is playing stop it
             if (sound) {
                 sound.stop();
             }
@@ -198,18 +255,15 @@ function playSelectedSong() {
                 volume: 0.5,
                 onplay: function () {
                     requestAnimationFrame(updateProgressBar);
-                    drawEqualizer();
                 }
             })
             sound.play();
 
-            //On end song go for the next in the list
-            sound.on('end', function () {
+            sound.on("end", function () {
                 changeSong(currentSongIndex + 1);
-                updateProgressBar();
-            });
+                requestAnimationFrame(updateProgressBar);
+            })
 
-            //HTML Display updates
             playButton.style.display = "none";
             pauseButton.style.display = "block";
             progressBar.style.display = "block";
@@ -233,12 +287,11 @@ function playRadio(stationIndex) {
     sound = new Howl({
         src: [station.url],
         html5: true,
-        format: ['mp3', 'm3u'],
+        format: ['mp3'],
         autoplay: true
     });
     sound.play();
 
-    //HTML Display updates
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 
@@ -269,7 +322,6 @@ function changeSong(index) {
         sound.unload();
     }
 
-    //Move to the next song by his index
     currentSongIndex = (index + songs.length) % songs.length;
 
     const selectedSong = songs[currentSongIndex];
@@ -281,7 +333,6 @@ function changeSong(index) {
 
     sound.play();
 
-    //HTML Display updates
     playButton.style.display = "none";
     pauseButton.style.display = "block";
 
@@ -289,11 +340,13 @@ function changeSong(index) {
     songTitle.textContent = selectedSong.title;
     songArtist.textContent = selectedSong.artist;
 
-    //Emphatize the song actually playing
     tableRows.forEach((otherRow) => {
         otherRow.classList.remove("focus-played-song", "selected-song");
     });
+
     tableRows[currentSongIndex].classList.add("focus-played-song", "selected-song");
+
+    requestAnimationFrame(updateProgressBar);
 }
 //FUNCTION TO DRAW THE EQUALIZER
 function drawEqualizer() {
@@ -307,18 +360,41 @@ function drawEqualizer() {
     for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] / 2;
 
-        ctx.fillStyle = 'red';
         ctx.fillStyle = `rgb(${barHeight + 100},50,50)`;
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
     }
+
+    requestAnimationFrame(drawEqualizer);
+}
+//FUNCTIONS ONMOUSE
+var mini = true;
+document.getElementById("mySidebar").style.width = "115px";
+document.getElementById("row").style.marginLeft = "115px";
+row2.style.marginLeft = "102px";
+document.getElementById("row3").style.marginLeft = "115px";
+function toggleSidebar() {
+    if (mini) {
+        document.getElementById("mySidebar").style.width = "255px";
+        document.getElementById("row").style.marginLeft = "255px";
+        row2.style.marginLeft = "240px";
+        document.getElementById("row3").style.marginLeft = "255px";
+        mini = false;
+    }
+    else {
+        document.getElementById("mySidebar").style.width = "115px";
+        document.getElementById("row").style.marginLeft = "115px";
+        row2.style.marginLeft = "102px";
+        document.getElementById("row3").style.marginLeft = "115px";
+        mini = true;
+    }
 }
 
-//FUNCTIONS CALLING
 listSongs();
 playSelectedSong();
 drawEqualizer();
+
 
 //LISTENERS
 playButton.addEventListener("click", function () {
@@ -328,20 +404,19 @@ playButton.addEventListener("click", function () {
             volume: 0.5,
             onplay: function () {
                 requestAnimationFrame(updateProgressBar);
-                drawEqualizer();
             }
         });
     }
     sound.play();
 
-    //On end song, go for next
-    sound.on('end', function () {
+    sound.on("end", function () {
         changeSong(currentSongIndex + 1);
         updateProgressBar();
-    });
+    })
 
     playButton.style.display = "none";
     pauseButton.style.display = "block";
+    requestAnimationFrame(updateProgressBar);
 });
 pauseButton.addEventListener("click", function () {
     sound.pause();
@@ -363,6 +438,21 @@ progressBarContainer.addEventListener("click", function (e) {
     const newPosition = percentage * sound.duration();
 
     sound.seek(newPosition);
+});
+artistSearcher.addEventListener("input", function () {
+    const searchTerm = artistSearcher.value.trim().toLowerCase();
+
+    // Loop through each artist image
+    allArtists.forEach(artistImage => {
+        const artistName = artistImage.alt.toLowerCase(); // Assuming the alt attribute contains the artist name
+
+        // Show or hide the artist image based on the search term
+        if (artistName.includes(searchTerm)) {
+            artistImage.style.display = "inline-block"; // Show the artist image
+        } else {
+            artistImage.style.display = "none"; // Hide the artist image
+        }
+    });
 });
 
 
@@ -392,4 +482,55 @@ document.getElementById("radio-station4").addEventListener("click", function () 
     playRadio(3);
     progressBar.style.display = "none";
     progressBarContainer.style.display = "none";
+});
+
+
+
+/*NAVIGATION PROGRAM*/
+document.addEventListener("DOMContentLoaded", function() {
+
+    const homeContainer = document.getElementById("row3");
+    const myMusicContainer = document.getElementById("row");
+    const exploreContainer = document.getElementById("row2");
+    const aboutContainer = document.getElementById("row4");
+
+    const homeMenu = document.getElementById("mainMenu");
+    const myMusicMenu = document.getElementById("myMusicMenu");
+    const exploreMenu = document.getElementById("exploreMenu");
+    const aboutMenu = document.getElementById("aboutMenu");
+
+    homeContainer.style.display = "block";
+    myMusicContainer.style.display = "none";
+    exploreContainer.style.display = "none";
+    aboutContainer.style.display = "none";
+
+    function showContainer(container) {
+        homeContainer.style.display = "none";
+        myMusicContainer.style.display = "none";
+        exploreContainer.style.display = "none";
+        aboutContainer.style.display = "none";
+
+        container.style.display = "block";
+    }
+
+    // Add click event listeners to menu items
+    homeMenu.addEventListener("click", function (e) {
+        e.preventDefault();
+        showContainer(homeContainer);
+    });
+
+    myMusicMenu.addEventListener("click", function (e) {
+        e.preventDefault();
+        showContainer(myMusicContainer);
+    });
+
+    exploreMenu.addEventListener("click", function (e) {
+        e.preventDefault();
+        showContainer(exploreContainer);
+    });
+
+    aboutMenu.addEventListener("click", function (e) {
+        e.preventDefault();
+        showContainer(aboutContainer);
+    });
 });

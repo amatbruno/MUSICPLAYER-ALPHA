@@ -6,20 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>MUSICPLAYER ALPHA</title>
 </head>
 
+
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-10 col-md-12 col-lg-12 song-info">
+        <div id="mySidebar" class="sidebar col-lg-2 col-md-2 col-sm-2" onmouseover="toggleSidebar()"
+            onmouseout="toggleSidebar()">
+            <a id="mainMenu" href="#"><i class="material-icons">home</i><span
+                    class="icon-text">Home</span></span></a><br>
+            <a id="myMusicMenu" href="#row"><i class="material-icons">favorite</i><span
+                    class="icon-text">MyMusic</span></a><br>
+            <a id="exploreMenu" href="#row2"><i class="material-icons">explore</i><span
+                    class="icon-text">Explore</span></a><br>
+            <a id="aboutMenu" href="#"><i class="material-icons">info</i><span class="icon-text">About</span></a>
+        </div>
+
+        <div id="row2">
+            <div class="search-div col-lg-12 col-md-11 col-sm-10">
+                <input type="text" id="artist-name" placeholder="Search...">
+            </div>
+            <div class="artists-table col-lg-12" id="artists-container">
+                    <h1>Artists</h1>
+                    <img
+                        src="https://yt3.googleusercontent.com/eBBD0oosfcaEL_mBDoQb6Ixc4PXQL27ru99rv5Ima9UFIz2RwwOqgz3j5mbxzChvIZEhBFz59Vw=s900-c-k-c0x00ffffff-no-rj" alt="Eladio Carrión">
+                    <img
+                        src="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/ac/b3/4f/acb34f94-5439-45e2-4f39-4e96057fb400/mza_16107639031153135449.jpg/486x486bb.png" alt="Beny Jr">
+                    <img src="https://www.elnacional.cat/uploads/s1/38/20/23/72/morad.jpeg" alt="Morad">
+                    <img src="https://i.scdn.co/image/ab6761610000e5eb7f19d4df57ae760cfbab33f5" alt="Anuel AA">
+                    <img src="https://i.scdn.co/image/ab676161000051746cad3eff5adc29e20f189a6c" alt="Lil Baby">
+                    <img
+                        src="https://elcomercio.pe/resizer/pIhUecWSL2Br4fYAp2Oahs1L3pg=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/74K73MF7PJB7JFZ7Y6YMWNXJQE.jpg" alt="Bad Bunny">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtcd4CbETykP2VIFMS_1cPyiGGgBOx4qTmGw&usqp=CAU" alt="Bad Gyal">
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <h1>Hot Albums</h1>
+                <img class="album" src="https://i.scdn.co/image/ab67616d0000b273005ee342f4eef2cc6e8436ab" alt="El ultimo tour del mundo">
+                <img class="album" src="https://i.scdn.co/image/ab67616d0000b273937ce99b134e3586d0bfdb19" alt="Reinsertado">
+                <img class="album" src="https://i.scdn.co/image/ab67616d0000b2731fbb8aa211472dc81f4e4ebc" alt="Las leyendas nunca mueren">
+                <img class="album" src="https://i.scdn.co/image/ab67616d00001e0202b1465a8e6b21d3308c18f4" alt="SEND2 KBRON">
+                <img class="album" src="https://i.scdn.co/image/ab67616d0000b2737aee5b36a3a60ca926bc429b" alt="Lÿfe">
+                <img class="album" src="https://i.scdn.co/image/ab67616d0000b2733e0698e4ae5ffb82a005aeeb" alt="Legends never die">
+            </div>
+        </div>
+
+        <div id="row">
+            <div class="song-info col-sm-9 col-md-10 col-lg-11 ">
                 <img class="cover-song" src="resources/cdSample.png">
                 <div class="song-details">
                     <div class="details col-lg-5">
-                        <h3 class="song-name">----------</h3>
-                        <p class="author-name">----------</p>
+                        <h3 class="song-name">song-name</h3>
+                        <p class="author-name">author-name</p>
                     </div>
-                    <div class="control-buttons col-lg-10 col-md-9">
+                    <div class="control-buttons col-lg-10 col-md-10">
                         <img class="return-button" src="resources/playPrevious.png">
                         <img class="play-button" src="resources/play.png">
                         <img class="pause-button" src="resources/pause.png">
@@ -27,12 +71,12 @@
                         <input type="range" id="volume-bar" min="0" max="1" value="0.5" step="0.01" />
                     </div>
                 </div>
-                <div id="progress-container">
+                <div id="progress-container" class="col-lg-4 col-lg-4 col-md-4">
                     <div id="progress-bar"></div>
                 </div>
             </div>
 
-            <div class="col-lg-8 col-md-8 songs-list">
+            <div class="col-lg-7 col-md-7 songs-list">
                 <table class="table">
                     <thead>
                         <tr>
@@ -47,12 +91,12 @@
 
             <div class="col-lg-4 col-md-4 equalizer-section">
                 <h3>Equalizer</h3>
-                <canvas id="equalizer"></canvas>
+                <canvas id="equalizer" width="400" height="100"></canvas>
             </div>
 
             <div class="col-lg-12 col-md-12 rs-title">
                 <h3>Radio Stations</h3>
-                <div class="radio-stations">
+                <div class="radio-stations col-lg-12 col-md-12 col-sm-0">
                     <button id="radio-station1" class="radio-button">Mirchi</button>
                     <button id="radio-station2" class="radio-button">Antenne Bayern</button>
                     <button id="radio-station3" class="radio-button">Bayer 3</button>
@@ -60,11 +104,29 @@
                 </div>
             </div>
         </div>
+
+        <div id="row3">
+            <div class="header col-lg-12 col-md-10">
+                <h1>MUSICPLAYER ALPHA</h1>
+                <div class="reveal left">
+                    <P>Welcome! Musicplayer Alpha is a platform where anyone can feel-free to listen and discover new
+                        songs, audios or podcasts.
+                        <br>
+                        We want to help you to choose the specific song to turn up your mood to start/end your best day.
+                        <b>Enjoy!</b>
+                    </P>
+                    <img src="resources/iconMainMenu.png">
+                </div>
+            </div>
+        </div>
+
+        <div id="row4">
+
+        </div>
     </div>
 </body>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" defer></script>
-<!-- <script src="howler.min.js"></script> -->
 <script src="scripts.js" defer></script>
+
 </html>
