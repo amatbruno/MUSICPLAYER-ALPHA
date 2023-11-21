@@ -1,0 +1,51 @@
+[
+    {
+        "artistName": "Eladio Carrión",
+        "realName": "Eladio Carrión Morales",
+        "gender": "Male",
+        "hit": "Coco Chanel",
+        "img": "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
+    },
+    {
+        "artistName": "Beny Jr",
+        "realName": "unknow",
+        "gender": "Male",
+        "hit": "El precio del dinero",
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl-ZWVC0NYUIks7hD-nYFDm8844YWB-K-pA&usqp=CAU"
+    },
+    {
+        "artistName": "Morad",
+        "realName": "Morad El Khattouti El Horami",
+        "gender": "Male",
+        "hit": "M.D.L.R",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Morad_performing_in_Casablanca_in_2022.png"
+    },
+    {
+        "artistName": "Anuel AA",
+        "realName": "Emmanuel Gazmey Santiago",
+        "gender": "Male",
+        "hit": "23 Preguntas",
+        "img": "https://fotografias.antena3.com/clipping/cmsimages02/2023/10/09/2D304E58-1410-4485-A757-4E9B240537EE/imagen-archivo-anuel_104.jpg?crop=1000,1000,x365,y0&width=1200&height=1200&optimize=low&format=webply"
+    },
+    {
+        "artistName": "Lil Baby",
+        "realName": "Dominique Armani Jones",
+        "gender": "Male",
+        "hit": "Freestyle",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Lil_Baby_in_2020.png/230px-Lil_Baby_in_2020.png"
+    },
+    {
+        "artistName": "Bad Bunny",
+        "realName": "Benito Antonio Martínez Ocasio",
+        "gender": "Male",
+        "hit": "La noche de anoche",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Bad_Bunny_concierto_Ecuador_2.jpg/174px-Bad_Bunny_concierto_Ecuador_2.jpg"
+    },
+    {
+        "artistName": "Bad Gyal",
+        "realName": "Alba Farelo i Solé",
+        "gender": "Female",
+        "hit": "Duro remix",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Primavera_Sound_L.A._%2852513800086%29_%28cropped2%29.jpg/220px-Primavera_Sound_L.A._%2852513800086%29_%28cropped2%29.jpg"
+    }
+]

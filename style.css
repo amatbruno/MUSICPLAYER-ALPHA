@@ -1,21 +1,20 @@
 /*IMPORTS*/
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Montserrat:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@700&family=Kanit:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@500&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background-color: rgba(212, 148, 255, 0.726);
     font-family: 'Kanit', sans-serif;
 }
+/* html {
+} */
 
-html {
-    
-}
 
 
 /*MAIN CONTAINER BLOCK*/
@@ -32,6 +31,7 @@ html {
 }
 
 
+
 .sidebar {
     height: 100%;
     width: 250px;
@@ -45,7 +45,6 @@ html {
     padding-top: 60px;
     white-space: nowrap;
 }
-
 .sidebar a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -54,15 +53,12 @@ html {
     display: block;
     margin-top: 30px;
 }
-
 .sidebar a:hover {
     color: #f1f1f1;
 }
-
 .sidebar span {
     margin-left: 25px;
 }
-
 #row .sidebar {
     position: absolute;
     top: 0;
@@ -70,22 +66,21 @@ html {
     font-size: 36px;
     margin-left: 50px;
 }
-
 .material-icons,
 .icon-text {
     vertical-align: middle;
 }
-
 .material-icons {
 
     margin-right: 30px
 }
-
 #row, #row2, #row3, #row4{
     transition: margin-left 0.4s;
     padding: 16px;
     margin-left: 210px;
 }
+
+
 
 @media screen and (max-height: 450px) {
     .sidebar {
@@ -109,29 +104,24 @@ html {
     display: flex;
     margin-bottom: 20px;
 }
-
 .song-details {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 5px;
 }
-
 .details {
     text-align: center;
 }
-
 .song-info img {
     width: 20%;
     border-radius: 10px;
     display: block;
 }
-
 .song-info h3 {
     width: 100%;
     margin-top: 45px;
 }
-
 .song-info p {
     width: 100%;
 }
@@ -147,33 +137,27 @@ html {
     border-radius: 8px;
     background-color: aliceblue;
 }
-
 table tr th {
     table-layout: fixed;
     font-size: 17px;
     font-weight: bold;
     background-color: rgba(160, 160, 160, 0.548);
 }
-
 table tr td {
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
 }
-
 table tr:hover {
     background-color: rgba(207, 207, 207, 0.671);
 }
-
 table tr th:hover {
     text-decoration: underline;
     color: rgba(205, 131, 255, 0.726);
 }
-
 table img {
     width: 50px;
 }
-
 .focus-played-song {
     color: rgba(226, 163, 209, 0.966);
     font-weight: 900;
@@ -187,7 +171,6 @@ table img {
     align-items: center;
     margin-top: -40px;
 }
-
 .control-buttons img {
     padding: 5%;
     width: 16%;
@@ -195,7 +178,6 @@ table img {
     margin-right: 35px;
     margin-left: -40px;
 }
-
 .control-buttons div {
     border: 1px solid black;
     width: 100%;
@@ -217,18 +199,16 @@ equalizer-section {
 /*RADIO STATION*/
 .rs-title {
     text-align: center;
-    margin-top: -130px;
+    margin-top: -110px;
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 900;
 }
-
 .radio-stations {
     justify-content: center;
     margin: auto;
     text-align: center;
     display: flex;
 }
-
 .radio-stations button {
     margin-right: 10px;
     padding: 20px;
@@ -236,22 +216,62 @@ equalizer-section {
     justify-content: center;
     color: #000000ce;
 }
-
-.radio-button {
-    border: none;
-    background-color: rgba(212, 148, 255, 0.726);
-    border-radius: 7px;
-    width: 75px;
-    padding: 2px;
-    border: 2px solid transparent;
-    font-size: 19px;
-    color: rgb(231, 244, 255);
+.radio-button,
+.radio-button *,
+.radio-button :after,
+.radio-button :before,
+.radio-button:after,
+.radio-button:before {
+  border: 0 solid;
+  box-sizing: border-box;
 }
-
+.radio-button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: button;
+    background-color: #000;
+    background-image: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 90%;
+    line-height: 1.5;
+    margin: 0;
+    -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+    padding: 0;
+}
+.radio-button:disabled {
+    cursor: default;
+  }
+  .radio-button:-moz-focusring {
+    outline: auto;
+  }
+  .radio-button svg {
+    display: block;
+    vertical-align: middle;
+  }
+  .radio-button [hidden] {
+    display: none;
+  }
+  .radio-button {
+    background-color: #d494ffb9;
+    border: 0.5px solid ;
+    border-radius: 999px;
+    box-sizing: border-box;
+    color: #000;
+    display: block;
+    font-weight: 400;
+    -webkit-mask-image: none;
+    overflow: hidden;
+    padding: 1.2rem 3rem;
+    position: relative;
+    text-transform: uppercase;
+    transition: 0.2s;
+  }
 .radio-button:hover {
-    border: solid 2px aliceblue;
-    color: #000000ce;
-    font-weight: 900;
+    box-shadow: 0 6px 0 -4px #d494ffb9, 0 9px 0 -4px #aaa, 0 11px 0 -4px #000;
+    transform: translateY(-5px);
 }
 
 
@@ -260,16 +280,28 @@ equalizer-section {
 #progress-container {
     margin-top: 100px;
     width: 100%;
-    height: 20px;
-    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    background-color: lig;
 }
-
 #progress-bar {
-    height: 100%;
+    height: 20px;
+    flex: 1;
     background-color: rgba(212, 148, 255, 0.726);
     width: 0;
 }
-
+#total-duration {
+    margin-left: 107%;
+    margin-top: -65px;
+    font-size: 20px;
+    font-weight: 800;
+}
+#actual-duration {
+    margin-left: -40px;
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 20px;
+}
 
 
 
@@ -282,33 +314,32 @@ equalizer-section {
     padding: 16px;
     background-color: aliceblue;
 }
-
 .search-div {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
 }
-
 .search-div input[type="text"] {
-    font-size: 45px;
+    font-size: 38px;
     margin-right: 30px;
     text-align: center;
+    height: 75px;
+    width: auto;
     background-color: aliceblue;
     border: solid 1px black;
+    border-radius: 50px;
 }
-
 .artists-table {
     display: grid;
-    grid-template-columns: 1.9fr 1.9fr 1.9fr 1.9fr;
-    width: 90%;
-    height: 80%;
+    grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr;
+    width: 100%;
+    height: 100%;
     max-height: 605px;
     margin: auto;
     gap: 50px;
     overflow-y: scroll;
     padding: 30px;
 }
-
 .artists-table img {
     width: 100%;
     height: 100%;
@@ -320,7 +351,6 @@ equalizer-section {
 .artists-table img:hover {
     transform: scale(1.1);
 }
-
 .artists-table h1 {
     text-align: center;
     align-items: center;
@@ -330,16 +360,13 @@ equalizer-section {
     border-top: 2px solid black;
     padding: 30px;
 }
-
 .artists-table hr {
     background-color: black;
     width: 100%;
 }
-
 .artists-table .album {
     border-radius: 50%;
 }
-
 
 
 
@@ -354,25 +381,28 @@ equalizer-section {
     letter-spacing: 4px;
     word-spacing: 3px;
     font-size: 120px;
-    font-weight: 800;
-    margin-top: 30px;
-    font-family: 'Kanit', sans-serif;
-    margin-bottom: 70px;
+    margin-top: 50px;
+    font-family: 'Urbanist', sans-serif;
+    margin-bottom: 30px;
 }
 .header p {
     font-size: 32px;
     line-height: 60px;
     letter-spacing: 3px;
+    color: #4d4d4d;
 }
 .header img {
-    margin-top: -50px;
+    margin-top: -70px;
     width: 40%;
 }
 
-.reveal-left {
-    position: relative;
-    transform: translateX(-200px);
-    opacity: 0;
-    transition: 0.75s all ease-in;
-    margin-top: 30px;
+
+
+/*SWEETALERT CUSTOM CLASS*/
+.custom-font-size {
+    font-size: 1px;
+}
+
+.custom-title-size {
+    font-size: 30px;
 }

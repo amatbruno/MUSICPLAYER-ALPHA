@@ -29,18 +29,14 @@
                 <input type="text" id="artist-name" placeholder="Search...">
             </div>
             <div class="artists-table col-lg-12" id="artists-container">
-                    <h1>Artists</h1>
-                    <img
-                        src="https://yt3.googleusercontent.com/eBBD0oosfcaEL_mBDoQb6Ixc4PXQL27ru99rv5Ima9UFIz2RwwOqgz3j5mbxzChvIZEhBFz59Vw=s900-c-k-c0x00ffffff-no-rj" alt="Eladio Carrión">
-                    <img
-                        src="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/ac/b3/4f/acb34f94-5439-45e2-4f39-4e96057fb400/mza_16107639031153135449.jpg/486x486bb.png" alt="Beny Jr">
-                    <img src="https://www.elnacional.cat/uploads/s1/38/20/23/72/morad.jpeg" alt="Morad">
-                    <img src="https://i.scdn.co/image/ab6761610000e5eb7f19d4df57ae760cfbab33f5" alt="Anuel AA">
-                    <img src="https://i.scdn.co/image/ab676161000051746cad3eff5adc29e20f189a6c" alt="Lil Baby">
-                    <img
-                        src="https://elcomercio.pe/resizer/pIhUecWSL2Br4fYAp2Oahs1L3pg=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/74K73MF7PJB7JFZ7Y6YMWNXJQE.jpg" alt="Bad Bunny">
-                    <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtcd4CbETykP2VIFMS_1cPyiGGgBOx4qTmGw&usqp=CAU" alt="Bad Gyal">
+                <h1>Artists</h1>
+                <img class="artist" src="https://yt3.googleusercontent.com/eBBD0oosfcaEL_mBDoQb6Ixc4PXQL27ru99rv5Ima9UFIz2RwwOqgz3j5mbxzChvIZEhBFz59Vw=s900-c-k-c0x00ffffff-no-rj" alt="Eladio Carrión">
+                <img class="artist" src="https://is1-ssl.mzstatic.com/image/thumb/Features126/v4/ac/b3/4f/acb34f94-5439-45e2-4f39-4e96057fb400/mza_16107639031153135449.jpg/486x486bb.png" alt="Beny Jr">
+                <img class="artist" src="https://www.elnacional.cat/uploads/s1/38/20/23/72/morad.jpeg" alt="Morad">
+                <img class="artist" src="https://i.scdn.co/image/ab6761610000e5eb7f19d4df57ae760cfbab33f5" alt="Anuel AA">
+                <img class="artist" src="https://i.scdn.co/image/ab676161000051746cad3eff5adc29e20f189a6c" alt="Lil Baby">
+                <img class="artist" src="https://elcomercio.pe/resizer/pIhUecWSL2Br4fYAp2Oahs1L3pg=/1200x1200/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/74K73MF7PJB7JFZ7Y6YMWNXJQE.jpg" alt="Bad Bunny">
+                <img class="artist" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtcd4CbETykP2VIFMS_1cPyiGGgBOx4qTmGw&usqp=CAU" alt="Bad Gyal">
                 <hr>
                 <hr>
                 <hr>
@@ -72,7 +68,9 @@
                     </div>
                 </div>
                 <div id="progress-container" class="col-lg-4 col-lg-4 col-md-4">
+                    <p id="actual-duration"></p>
                     <div id="progress-bar"></div>
+                    <p id="total-duration"></p>
                 </div>
             </div>
 
@@ -108,25 +106,23 @@
         <div id="row3">
             <div class="header col-lg-12 col-md-10">
                 <h1>MUSICPLAYER ALPHA</h1>
-                <div class="reveal left">
-                    <P>Welcome! Musicplayer Alpha is a platform where anyone can feel-free to listen and discover new
+                    <P>Welcome guest! This is Musicplayer Alpha, a platform where anyone can feel-free to listen and discover new
                         songs, audios or podcasts.
                         <br>
-                        We want to help you to choose the specific song to turn up your mood to start/end your best day.
+                        We want to help you to choose the specific song to turn up your mood and make your day better.
                         <b>Enjoy!</b>
                     </P>
                     <img src="resources/iconMainMenu.png">
-                </div>
             </div>
         </div>
 
         <div id="row4">
-
         </div>
     </div>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="scripts.js" defer></script>
 
 </html>

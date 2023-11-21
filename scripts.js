@@ -74,67 +74,8 @@ const radioStations = [
         url: "http://play.rockantenne.de/rockantenne.m3u"
     }
 ];
-const artistInfo = [
-    {
-        artistName: "Eladio Carrión",
-        realName: "Eladio Carrión Morales",
-        gender: "Male",
-        hit: "Coco Chanel",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    },
-    {
-        artistName: "Beny Jr",
-        realName: "unknow",
-        gender: "Male",
-        hit: "El precio del dinero",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfl-ZWVC0NYUIks7hD-nYFDm8844YWB-K-pA&usqp=CAU"
-    },
-    {
-        artistName: "Morad",
-        realName: "Morad El Khattouti El Horami",
-        gender: "Male",
-        hit: "M.D.L.R",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    },
-    {
-        artistName: "Anuel AA",
-        realName: "Emmanuel Gazmey Santiago",
-        gender: "Male",
-        hit: "23 Preguntas",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    },
-    {
-        artistName: "Lil Baby",
-        realName: "Dominique Armani Jones",
-        gender: "Male",
-        hit: "Freestyle",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    },
-    {
-        artistName: "Bad Bunny",
-        realName: "Benito Antonio Martínez Ocasio",
-        gender: "Male",
-        hit: "La noche de anoche",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    },
-    {
-        artistName: "Bad Gyal",
-        realName: "Alba Farelo i Solé",
-        gender: "Male",
-        hit: "Duro remix",
-        img: "https://i.scdn.co/image/ab6761610000517487ff3d09a0fdb1fbdaed417b"
-    }
-];
-const albumInfo = [
-    {
-        name: "",
-        artistsInvolved: "",
-        publishDate: "",
-        numberOfSongs: ""
-    }
-];
 
-//QUERY SELECTORS
+//#region HTML ELEMENTS VARIABLES DECLARATION
 const songTitle = document.querySelector(".song-name");
 const songArtist = document.querySelector(".author-name");
 const songImage = document.querySelector(".cover-song");
@@ -152,7 +93,10 @@ const ctx = canvas.getContext("2d");
 const artistsContainer = document.getElementById('artists-container');
 const artistSearcher = document.getElementById('artist-name');
 const allArtists = Array.from(artistsContainer.getElementsByTagName('img'));
-
+const songTotalDuration = document.getElementById('total-duration');
+const songActualDuration = document.getElementById('actual-duration');
+const artistsImg = document.querySelectorAll('.artist');
+//#endregion
 
 //INITIALLY HIDING
 pauseButton.style.display = "none";
@@ -232,6 +176,7 @@ function listSongs() {
     });
 }
 //FUNCTION TO PLAY A SELECTED SONG FROM PLAYLIST
+let progressUpdateInterval;
 function playSelectedSong() {
     const tableRows = document.querySelectorAll("table tr");
 
@@ -248,21 +193,23 @@ function playSelectedSong() {
 
             if (sound) {
                 sound.stop();
+                sound.unload();
             }
 
             sound = new Howl({
                 src: [selectedSong.src],
                 volume: 0.5,
-                onplay: function () {
-                    requestAnimationFrame(updateProgressBar);
+                onend: function () {
+                    // Automatically play the next song when the current song ends
+                    changeSong(currentSongIndex + 1);
+                },
+                onload: function () {
+                    resetProgressBar();
+                    progressUpdateInterval = setInterval(updateProgressBar, 1000);  // Update every second
                 }
-            })
-            sound.play();
+            });
 
-            sound.on("end", function () {
-                changeSong(currentSongIndex + 1);
-                requestAnimationFrame(updateProgressBar);
-            })
+            sound.play();
 
             playButton.style.display = "none";
             pauseButton.style.display = "block";
@@ -272,8 +219,24 @@ function playSelectedSong() {
             songImage.src = selectedSong.img;
             songTitle.textContent = selectedSong.title;
             songArtist.textContent = selectedSong.artist;
+            songTotalDuration.textContent = selectedSong.duration;
         });
     });
+}
+function updateProgressBar() {
+    const progress = (sound.seek() / sound.duration()) * 100;
+    progressBar.style.width = progress + '%';
+
+    // Update the actual duration
+    const minutes = Math.floor(sound.seek() / 60);
+    const seconds = Math.floor(sound.seek() % 60);
+    songActualDuration.innerHTML = `${minutes}:${seconds}`;
+}
+//RESET THE PROGRESS BAR
+function resetProgressBar() {
+    // Reset progress bar to 0% and actual duration to 0:00
+    progressBar.style.width = '0%';
+    songActualDuration.innerHTML = '0:00';
 }
 //FUNCTION FOR PLAYING RADIO
 function playRadio(stationIndex) {
@@ -313,6 +276,11 @@ function updateProgressBar() {
 
     if (sound.playing()) {
         requestAnimationFrame(updateProgressBar);
+
+        // Update the actual duration
+        const minutes = Math.floor(sound.seek() / 60);
+        const seconds = Math.floor(sound.seek() % 60);
+        songActualDuration.innerHTML = `${minutes}:${seconds}`;
     }
 }
 //FUNCTION TO CHANGE THE SONG
@@ -368,7 +336,7 @@ function drawEqualizer() {
 
     requestAnimationFrame(drawEqualizer);
 }
-//FUNCTIONS ONMOUSE
+//FUNCTIONS ONMOUSE FOR SIDEBAR
 var mini = true;
 document.getElementById("mySidebar").style.width = "115px";
 document.getElementById("row").style.marginLeft = "115px";
@@ -390,11 +358,88 @@ function toggleSidebar() {
         mini = true;
     }
 }
+//GET ARTISTS JSON DATA
+async function getArtistsData() {
+    try {
+        const response = await fetch('artists.json');
+
+        if (!response.ok) {
+            throw new Error("Error-HTTP: " + response.status);
+        }
+
+        const jsonArtists = await response.json();
+
+        const artistImages = document.querySelectorAll('.artist');
+
+        artistImages.forEach((artistImg, index) => {
+            artistImg.addEventListener("click", function () {
+                const artist = jsonArtists[index];
+                Swal.fire({
+                    title: `${artist.artistName}`,
+                    imageUrl: `${artist.img}`,
+                    html: `<b>Real Name:</b> ${artist.realName}<br><b>Gender:</b> 
+                    ${artist.gender}<br><b>Hit:</b> ${artist.hit}`,
+                    imageWidth: 280,
+                    imageHeight: 300,
+                    customClass: {
+                        title: 'custom-title-size',
+                        html: 'custom-font-size'
+                    }
+                });
+            });
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+//GET ALBUM JSON DATA
+async function getAlbumsData() {
+    try {
+        const response = await fetch('albums.json');
+
+        if (!response.ok) {
+            throw new Error("Error-HTTP: " + response.status);
+        }
+
+        const jsonAlbums = await response.json();
+
+        const albumsImages = document.querySelectorAll('.album');
+
+        albumsImages.forEach((artistImg, index) => {
+            artistImg.addEventListener("click", function () {
+                const album = jsonAlbums[index];
+                Swal.fire({
+                    title: `${album.name}`,
+                    imageUrl: `${album.img}`,
+                    html: `<b>Artists involved:</b> 
+                      ${album.artistsInvolved[0].artist1}, 
+                      ${album.artistsInvolved[0].artist2},<br>
+                      ${album.artistsInvolved[0].artist3},
+                      ${album.artistsInvolved[0].artist4},
+                      ${album.artistsInvolved[0].artist5},<br>
+                      ${album.artistsInvolved[0].artist6},
+                      ${album.artistsInvolved[0].artist7},<br>
+                      <b>Publish date:</b> ${album.publishDate}<br>
+                      <b>Number of songs:</b> ${album.numberOfSongs}`,
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    customClass: {
+                        title: 'custom-title-size',
+                        html: 'custom-font-size'
+                    }
+                });
+            });
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 listSongs();
 playSelectedSong();
 drawEqualizer();
-
+getArtistsData();
+getAlbumsData();
 
 //LISTENERS
 playButton.addEventListener("click", function () {
@@ -485,9 +530,8 @@ document.getElementById("radio-station4").addEventListener("click", function () 
 });
 
 
-
 /*NAVIGATION PROGRAM*/
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     const homeContainer = document.getElementById("row3");
     const myMusicContainer = document.getElementById("row");

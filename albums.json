@@ -1,0 +1,84 @@
+[
+    {
+        "name": "El último tour del mundo",
+        "img": "https://i.scdn.co/image/ab67616d0000b273005ee342f4eef2cc6e8436ab",
+        "artistsInvolved": [
+            {
+                "artist1": "Bad Bunny",
+                "artist2": "Rosalía",
+                "artist3": "Jhay Cortez",
+                "artist4": "Abra"
+            }
+        ],
+        "publishDate": "27-11-2020",
+        "numberOfSongs": "16"
+    },
+    {
+        "name": "Reinsertado",
+        "img": "https://i.scdn.co/image/ab67616d0000b273937ce99b134e3586d0bfdb19",
+        "artistsInvolved": [
+            {
+                "artist1": "Beny Jr",
+                "artist2": "Nicky Nicole",
+                "artist3": "Eladio Carrión",
+                "artist4": "Ninho",
+                "artist5": "JUL",
+                "artist6": "ElGrandeToto",
+                "artist7": "RvFv"
+            }
+        ],
+        "publishDate": "2023",
+        "numberOfSongs": "20"
+    },
+    {
+        "name": "Las leyendas nunca mueren",
+        "img": "https://i.scdn.co/image/ab67616d0000b2731fbb8aa211472dc81f4e4ebc",
+        "artistsInvolved": [
+            {
+                "artist1": "Eladio Carrión",
+                "artist2": "Mora",
+                "artist3": "Jhay Cortez",
+                "artist4": "Myke Towers"
+            }
+        ],
+        "publishDate": "26-11-2021",
+        "numberOfSongs": "16"
+    },
+    {
+        "name": "SEN2KBRN",
+        "img": "https://i.scdn.co/image/ab67616d00001e0202b1465a8e6b21d3308c18f4",
+        "artistsInvolved": [
+            {}
+        ],
+        "publishDate": "18-11-2022",
+        "numberOfSongs": "10"
+    },
+    {
+        "name": "Lÿfe",
+        "img": "https://i.scdn.co/image/ab67616d0000b2737aee5b36a3a60ca926bc429b",
+        "artistsInvolved": [
+            {
+                "artist1": "Lil Uzi Vert"
+            }
+        ],
+        "publishDate": "10-09-2022",
+        "numberOfSongs": "12"
+    },
+    {
+        "name": "Legends never die",
+        "img": "https://i.scdn.co/image/ab67616d0000b2733e0698e4ae5ffb82a005aeeb",
+        "artistsInvolved": [
+            {
+                "artist1": "The Weekend",
+                "artist2": "Trippie Redd",
+                "artist3": "Marshmello",
+                "artist4": "Polo G",
+                "artist5": "The Kid Laroi",
+                "artist6": "Halsey",
+                "artist7": "Polo G"
+            }
+        ],
+        "publishDate": "10-07-2020",
+        "numberOfSongs": "22"
+    }
+]
