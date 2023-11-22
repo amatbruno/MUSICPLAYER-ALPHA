@@ -100,6 +100,7 @@ const artistsImg = document.querySelectorAll('.artist');
 
 //INITIALLY HIDING
 pauseButton.style.display = "none";
+// clearSearcher.style.display = "none";
 
 const audioElement = new Audio();
 audioElement.src = songs[0].src;
@@ -487,15 +488,20 @@ progressBarContainer.addEventListener("click", function (e) {
 artistSearcher.addEventListener("input", function () {
     const searchTerm = artistSearcher.value.trim().toLowerCase();
 
+//     document.getElementById('clear-search').addEventListener("click", () =>{
+//         artistSearcher.value = "";
+// })
+
     // Loop through each artist image
     allArtists.forEach(artistImage => {
         const artistName = artistImage.alt.toLowerCase(); // Assuming the alt attribute contains the artist name
 
         // Show or hide the artist image based on the search term
         if (artistName.includes(searchTerm)) {
-            artistImage.style.display = "inline-block"; // Show the artist image
+            artistImage.style.display = "inline-block";
+            
         } else {
-            artistImage.style.display = "none"; // Hide the artist image
+            artistImage.style.display = "none";
         }
     });
 });
@@ -536,28 +542,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const homeContainer = document.getElementById("row3");
     const myMusicContainer = document.getElementById("row");
     const exploreContainer = document.getElementById("row2");
-    const aboutContainer = document.getElementById("row4");
 
     const homeMenu = document.getElementById("mainMenu");
     const myMusicMenu = document.getElementById("myMusicMenu");
     const exploreMenu = document.getElementById("exploreMenu");
-    const aboutMenu = document.getElementById("aboutMenu");
 
     homeContainer.style.display = "block";
     myMusicContainer.style.display = "none";
     exploreContainer.style.display = "none";
-    aboutContainer.style.display = "none";
 
     function showContainer(container) {
         homeContainer.style.display = "none";
         myMusicContainer.style.display = "none";
         exploreContainer.style.display = "none";
-        aboutContainer.style.display = "none";
-
         container.style.display = "block";
     }
 
-    // Add click event listeners to menu items
     homeMenu.addEventListener("click", function (e) {
         e.preventDefault();
         showContainer(homeContainer);
@@ -571,10 +571,5 @@ document.addEventListener("DOMContentLoaded", function () {
     exploreMenu.addEventListener("click", function (e) {
         e.preventDefault();
         showContainer(exploreContainer);
-    });
-
-    aboutMenu.addEventListener("click", function (e) {
-        e.preventDefault();
-        showContainer(aboutContainer);
     });
 });

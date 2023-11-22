@@ -74,7 +74,7 @@ body {
 
     margin-right: 30px
 }
-#row, #row2, #row3, #row4{
+#row, #row2, #row3{
     transition: margin-left 0.4s;
     padding: 16px;
     margin-left: 210px;
@@ -366,6 +366,12 @@ equalizer-section {
 }
 .artists-table .album {
     border-radius: 50%;
+}
+#clear-search {
+    margin-left: -90px;
+    width: 30px;
+    cursor: pointer;
+    margin-top: -19px;
 }
 
 
