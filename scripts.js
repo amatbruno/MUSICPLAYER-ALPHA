@@ -488,10 +488,6 @@ progressBarContainer.addEventListener("click", function (e) {
 artistSearcher.addEventListener("input", function () {
     const searchTerm = artistSearcher.value.trim().toLowerCase();
 
-//     document.getElementById('clear-search').addEventListener("click", () =>{
-//         artistSearcher.value = "";
-// })
-
     // Loop through each artist image
     allArtists.forEach(artistImage => {
         const artistName = artistImage.alt.toLowerCase(); // Assuming the alt attribute contains the artist name
